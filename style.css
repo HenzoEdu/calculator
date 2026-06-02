@@ -1,0 +1,120 @@
+/* Centraliza a calculadora na tela */
+body {
+    background: linear-gradient(to bottom right, gray, #222222, black);
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* 1. ESTILO DA CARCAÇA */
+.calculadora-corpo {
+    background-color: #1a1a1a;   
+    border: 3px solid #000000;   
+    border-radius: 20px;         
+    padding: 20px;               
+    width: 356px;                
+    box-sizing: border-box;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.7); 
+}
+
+box {
+    display: block;
+    width: 100%;                 
+    margin-bottom: 15px;         
+}
+
+#calculadora-visor {
+    width: 100%;
+}
+
+.visor {
+    border: 2px solid #000000;   
+    border-radius: 12px;         
+    background-color: #222222;   
+    color: #00ff00;              
+    width: 100%;                 
+    height: 75px;                
+    box-sizing: border-box;
+    display: flex;               
+    justify-content: flex-end;   
+    align-items: center;         
+    padding: 0 20px;             
+    font-family: monospace;      
+    font-size: 36px;             
+    white-space: nowrap;         
+    overflow: hidden;            
+}
+
+/* 2. Grid para organizar os botões */
+.botoes {
+    display: grid;
+    grid-template-columns: repeat(4, 70px); 
+    gap: 12px;                              
+    width: 100%;                            
+}
+
+/* Estado normal do botão */
+.botoes button {
+    height: 70px;
+    border: 2px solid #000000;   
+    border-radius: 12px;         
+    background-color: #222222;  
+    color: #FFFFFF;             
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s; 
+    
+    /* Configurações essenciais para prender a onda dentro do botão */
+    position: relative;
+    overflow: hidden; 
+    outline: none;
+}
+
+/* Efeito ao passar o mouse */
+.botoes button:hover {
+    background-color: #666666;  
+    color: #FFFFFF;             
+    border-color: gray;      
+}
+
+/* Criando o elemento da onda que vai correr por dentro */
+.botoes button::after {
+    content: "";
+    position: absolute;
+    top: var(--y, 0px);
+    left: var(--x, 0px);
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.4); /* Cor da gota se espalhando */
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    pointer-events: none; /* Não bloqueia o clique real */
+}
+
+/* Quando o botão for clicado, dispara a animação (CORRIGIDO: forwards) */
+.botoes button.onda-ativa::after {
+    animation: correrOnda 0.4s ease-out forwards;
+}
+
+@keyframes correrOnda {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(12); /* Expande até cobrir o botão */
+        opacity: 0;
+    }
+}
+
+/* Garante que o botão enter mantenha o padrão escuro */
+#enter {
+    background-color: #222222;
+}
